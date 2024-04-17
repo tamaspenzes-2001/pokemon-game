@@ -21,3 +21,11 @@ class Pokémon:
     print(f"{self.name} lost {number} health, now has {self.health} health.")
     if self.health <= 0:
       self.knock_out()
+
+  def regain_health(self, number):
+    if self.health + number >= self.max_health:
+      print(f"{self.name} gained {self.max_health - self.health} health, is now on full health ({self.max_health})")
+      self.health = self.max_health
+    else:
+      self.health += number
+      print(f"{self.name} gained {number} health, now has {self.health} health.")
