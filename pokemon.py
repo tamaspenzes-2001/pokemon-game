@@ -36,11 +36,11 @@ class Pokémon:
       self.health += number
       print(f"{self.name} gained {number} health, now has {self.health} health.")
 
-  def attack(self, pokémon):
+  def attack(self, other_pokémon):
     for multiplier in Pokémon.multipliers:
-      if f"{self.type}-{pokémon.type}" in Pokémon.multipliers[multiplier]:
+      if f"{self.type}-{other_pokémon.type}" in Pokémon.multipliers[multiplier]:
         attack_multiplier = multiplier
         break
     attack_power = self.level * attack_multiplier
-    print(f"{self.name} attacked {pokémon.name}, dealt {attack_power} damage.")
-    pokémon.lose_health(attack_power)
+    print(f"{self.name} attacked {other_pokémon.name}, dealt {attack_power} damage.")
+    other_pokémon.lose_health(attack_power)
