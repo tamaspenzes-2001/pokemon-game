@@ -25,4 +25,7 @@ class Trainer(Character):
     if self.active_pokémon.knocked_out:
       self.knock_out_pokémons.append(self.active_pokémon)
       self.pokémons.remove(self.active_pokémon)
-      self.active_pokémon = random.choice(pokémons)
+      self.switch_pokémon(random.choice(pokémons))
+
+  def switch_pokémon(self, pokémon):
+    self.active_pokémon = pokémon
