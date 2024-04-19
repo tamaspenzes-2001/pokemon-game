@@ -1,7 +1,8 @@
 import random
 
-class Trainer:
+class Trainer(Character):
   def __init__(self, name, pokémons, potions):
+    Character.__init__(name, 20)
     self.name = name
     self.pokémons = pokémons
     self.potions = potions

@@ -1,4 +1,4 @@
-class Pokémon:
+class Pokémon(Character):
   multipliers = {
     0: ["normal-ghost", "electric-ground", "fighting-ghost", "poison-steel", "ground-flying", "psychic-dark", "ghost-normal", "dragon-fairy"]
     0.5: ["normal-rock", "normal-steel", "fire-fire", "fire-water", "fire-rock", "fire-dragon", "water-water", "water-grass", "water-dragon", "electric-electric", "electric-grass", "electric-dragon", "grass-fire", "grass-grass", "grass-poison", "grass-fly", "grass-bug", "grass-dragon", "grass-steel", "ice-fire", "ice-water", "ice-ice", "ice-steel", "fighting-poison", "fighting-flying", "fighting-psychic", "fighting-bug", "fighting-fairy", "poison-ground", "poison-rock", "poison-ghost", "ground-grass", "ground-bug", "flying-electric", "flying-rock", "flying-steel", "psychic-psychic", "psychic-steel", "bug-fire", "bug-fighting", "bug-poison", "bug-flying", "bug-ghost", "bug-steel", "bug-fairy", "rock-fighting", "rock-ground", "rock-steel", "ghost-dark", "dragon-steel", "dark-fighting", "dark-dark", "dark-fairy", "steel-fire", "steel-water", "steel-electric", "steel-steel", "fairy-fire", "fairy-poison", "fairy-steel"]
@@ -6,35 +6,14 @@ class Pokémon:
   }
 
   def __init__(self, name, level, pokémon_type):
-    self.name = name
+    Character.__init__(name, level+2)
     self.level = level
     self.type = pokémon_type
-    self.max_health = level + 2
-    self.health = self.max_health
-    self.knocked_out = False
-
-  def knock_out(self):
-    self.knocked_out = True
-    print(f"{self.name} is knocked out!")
 
   def revive(self):
     self.knocked_out = False
     self.health = self.max_health
     print(f"{self.name} is revived!")
-
-  def lose_health(self, number):
-    self.health -= number
-    print(f"{self.name} lost {number} health, now has {self.health} health.")
-    if self.health <= 0:
-      self.knock_out()
-
-  def regain_health(self, number):
-    if self.health + number >= self.max_health:
-      print(f"{self.name} gained {self.max_health - self.health} health, is now on full health ({self.max_health})")
-      self.health = self.max_health
-    else:
-      self.health += number
-      print(f"{self.name} gained {number} health, now has {self.health} health.")
 
   def attack(self, other_pokémon):
     for multiplier in Pokémon.multipliers:
