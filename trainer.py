@@ -1,13 +1,14 @@
 import random
+from character import Character
 
 class Trainer(Character):
   def __init__(self, name, pokémons, potions):
-    Character.__init__(name, 20)
+    Character.__init__(self, name, 20)
     self.name = name
     self.pokémons = pokémons
     self.potions = potions
     self.active_pokémon = random.choice(pokémons)
-    self.knock_out_pokémons = []
+    self.knocked_out_pokémons = []
 
   def heal_pokémon(self):
     if self.potions > 0:
@@ -23,9 +24,10 @@ class Trainer(Character):
     other_trainer.lose_health(attack_power)
     self.active_pokémon.attack(other_trainer.active_pokémon)
     if self.active_pokémon.knocked_out:
-      self.knock_out_pokémons.append(self.active_pokémon)
+      self.knocked_out_pokémons.append(self.active_pokémon)
       self.pokémons.remove(self.active_pokémon)
       self.switch_pokémon(random.choice(pokémons))
 
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon
+    print(f"{pokémon.name} is now the active pokémon of {self.name}.")
