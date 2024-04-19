@@ -7,6 +7,7 @@ class Trainer(Character):
     self.pokémons = pokémons
     self.potions = potions
     self.active_pokémon = random.choice(pokémons)
+    self.knock_out_pokémons = []
 
   def heal_pokémon(self):
     if self.potions > 0:
@@ -21,3 +22,7 @@ class Trainer(Character):
     print(f"{self.name} attacked {other_trainer.name}, dealt {attack_power} damage.")
     other_trainer.lose_health(attack_power)
     self.active_pokémon.attack(other_trainer.active_pokémon)
+    if self.active_pokémon.knocked_out:
+      self.knock_out_pokémons.append(self.active_pokémon)
+      self.pokémons.remove(self.active_pokémon)
+      self.active_pokémon = random.choice(pokémons)
