@@ -15,3 +15,9 @@ class Trainer(Character):
       self.potions -= 1
     else:
       print(f"{self.name} has no potions left!")
+
+  def attack(self, other_trainer):
+    attack_power = random.randint(1, 4)
+    print(f"{self.name} attacked {other_trainer.name}, dealt {attack_power} damage.")
+    other_trainer.lose_health(attack_power)
+    self.active_pokémon.attack(other_trainer.active_pokémon)
