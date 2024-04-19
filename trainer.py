@@ -23,10 +23,13 @@ class Trainer(Character):
     print(f"{self.name} attacked {other_trainer.name}, dealt {attack_power} damage.")
     other_trainer.lose_health(attack_power)
     self.active_pokémon.attack(other_trainer.active_pokémon)
-    if self.active_pokémon.knocked_out:
-      self.knocked_out_pokémons.append(self.active_pokémon)
-      self.pokémons.remove(self.active_pokémon)
-      self.switch_pokémon(random.choice(pokémons))
+    if other_trainer.active_pokémon.knocked_out:
+      other_trainer.active_pokémon_knocked_out()
+      
+  def active_pokémon_knocked_out(self):
+    self.knocked_out_pokémons.append(self.active_pokémon)
+    self.pokémons.remove(self.active_pokémon)
+    self.switch_pokémon(random.choice(self.pokémons))
 
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon

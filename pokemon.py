@@ -23,6 +23,6 @@ class Pokémon(Character):
       if f"{self.type}-{other_pokémon.type}" in Pokémon.multipliers[multiplier]:
         attack_multiplier = multiplier
         break
-    attack_power = self.level * attack_multiplier
+    attack_power = int(self.level * attack_multiplier)
     print(f"{self.name} attacked {other_pokémon.name}, dealt {attack_power} damage.")
     other_pokémon.lose_health(attack_power)
