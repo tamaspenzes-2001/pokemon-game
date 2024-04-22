@@ -7,10 +7,11 @@ class Pokémon(Character):
     2: ["fire-grass", "fire-ice", "fire-bug", "fire-steel", "water-fire", "water-ground", "water-rock", "electric-water", "electric-flying", "grass-water", "grass-ground", "grass-rock", "ice-grass", "ice-ground", "ice-fly", "ice-dragon", "fighting-normal", "fighting-ice", "fighting-rock", "fighting-dark", "fighting-steel", "poison-grass", "poison-fairy", "ground-fire", "ground-electric", "ground-poison", "ground-rock", "ground-steel", "flying-grass", "flying-fighting", "flying-bug", "psychic-fighting", "psychic-poisonous", "bug-grass", "bug-psychic", "bug-dark", "rock-fire", "rock-ice", "rock-flying", "rock-bug", "ghost-psychic", "ghost-ghost", "dragon-dragon", "dark-psychic", "dark-ghost", "steel-ice", "steel-rock", "steel-fairy", "fairy-fighting", "fairy-dragon", "fairy-dark"]
   }
 
-  def __init__(self, name, level, pokémon_type):
-    Character.__init__(self, name, level+2)
-    self.level = level
+  def __init__(self, name, pokémon_type):
+    Character.__init__(self, name, 4)
+    self.level = 1
     self.type = pokémon_type
+    self.xp = 0
 
   def revive(self):
     self.knocked_out = False
@@ -23,6 +24,17 @@ class Pokémon(Character):
       if f"{self.type}-{other_pokémon.type}" in Pokémon.multipliers[multiplier]:
         attack_multiplier = multiplier
         break
-    attack_power = int(self.level * attack_multiplier)
+    attack_power = (self.level + 1) * attack_multiplier
     print(f"{self.name} attacked {other_pokémon.name}, dealt {attack_power} damage.")
     other_pokémon.lose_health(attack_power)
+    if attack_power > 0:
+      self.gain_xp(attack_power)
+
+  def gain_xp(self, damage_dealt):
+    xp_earned = damage_dealt - (self.level / 2)
+    self.xp += xp_earned
+    print(f"{self.name} gained {xp_earned} xp, now has {self.xp} xp.")
+    if self.xp >= self.level * 10:
+      self.level += 1
+      self.max_health += 1
+      print(f"{self.name} leveled up, now is level {self.level} with {self.max_health} max health!")

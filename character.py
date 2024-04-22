@@ -17,7 +17,7 @@ class Character:
 
   def regain_health(self, number):
     if self.health + number >= self.max_health:
-      print(f"{self.name} gained {self.max_health - self.health} health, is now on full health ({self.max_health})")
+      print(f"{self.name} gained {int(self.max_health - self.health)} health, is now on full health ({self.max_health})")
       self.health = self.max_health
     else:
       self.health += number
