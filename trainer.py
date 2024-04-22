@@ -1,4 +1,5 @@
 import random
+import sys
 from character import Character
 
 class Trainer(Character):
@@ -26,7 +27,7 @@ class Trainer(Character):
     other_trainer.lose_health(attack_power)
     self.active_pokémon.attack(other_trainer.active_pokémon)
     if other_trainer.active_pokémon.knocked_out:
-      other_trainer.active_pokémon_knocked_out()
+      other_trainer.active_pokémon_knocked_out(self)
 
   def gain_xp(self, damage_dealt):
     xp_earned = damage_dealt - (self.level / 2)
@@ -40,10 +41,15 @@ class Trainer(Character):
       self.revive_potions += 1
       print(f"{self.name} won a healing and a revive potion, has {self.healing_potions} healing and {self.revive_potions} revive potions.")
       
-  def active_pokémon_knocked_out(self):
+  def active_pokémon_knocked_out(self, other_trainer):
     self.knocked_out_pokémons.append(self.active_pokémon)
     self.pokémons.remove(self.active_pokémon)
-    self.switch_pokémon(random.choice(self.pokémons))
+    if len(pokémons) > 0:
+      self.switch_pokémon(random.choice(self.pokémons))
+    else:
+      print(f"{self.name} has no more pokémons left!")
+      self.knock_out()
+      sys.exit(f"{other_trainer} won the game!")
 
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon
