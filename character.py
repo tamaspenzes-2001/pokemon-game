@@ -3,6 +3,8 @@ class Character:
     self.name = name
     self.max_health = max_health
     self.health = self.max_health
+    self.level = 1
+    self.xp = 0
     self.knocked_out = False
 
   def knock_out(self):

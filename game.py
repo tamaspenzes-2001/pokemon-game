@@ -5,15 +5,18 @@ charmander = Pokémon("Charmander", "fire")
 ninetales = Pokémon("Ninetales", "electric")
 moltres = Pokémon("Moltres", "bug")
 
-kabu = Trainer("Kabu", [charmander, ninetales, moltres], 5)
+kabu = Trainer("Kabu", [charmander, ninetales, moltres])
 
 mankey = Pokémon("Mankey", "fighting")
 mewtwo = Pokémon("Mewtwo", "water")
 tauros = Pokémon("Tauros", "fairy")
 
-bruno = Trainer("Bruno", [mankey, mewtwo, tauros], 6)
+bruno = Trainer("Bruno", [mankey, mewtwo, tauros])
 
-kabu.attack(bruno)
-bruno.attack(kabu)
-kabu.heal_pokémon()
-bruno.heal_pokémon()
+for i in range(6):
+  kabu.attack(bruno)
+  bruno.attack(kabu)
+  print("")
+  kabu.heal_pokémon()
+  bruno.heal_pokémon()
+  print("")
