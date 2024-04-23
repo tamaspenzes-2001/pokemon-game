@@ -13,8 +13,19 @@ tauros = Pokémon("Tauros", "fairy")
 
 bruno = Trainer("Bruno", [mankey, mewtwo, tauros])
 
-print(kabu)
-print(bruno)
+vulpix = Pokémon("Ninetales", "ice")
+jynx = Pokémon("Jynx", "psychic")
+dewgong = Pokémon("Dewgong", "ghost")
+
+glacia = Trainer("Glacia", [vulpix, jynx, dewgong])
+
+latias = Pokémon("Latias", "steel")
+dragonite = Pokémon("Dragonite", "dragon")
+gabite = Pokémon("Gabite", "grass")
+
+drake = Trainer("Drake", [latias, dragonite, gabite])
+
+trainers = [kabu, bruno, glacia, drake]
 
 for i in range(6):
   kabu.attack(bruno)
