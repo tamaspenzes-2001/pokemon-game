@@ -17,6 +17,7 @@ for i in range(6):
   kabu.attack(bruno)
   bruno.attack(kabu)
   print("")
+  kabu.revive_pokémon(charmander)
   kabu.heal_pokémon()
   bruno.heal_pokémon()
   print("")

@@ -20,6 +20,16 @@ class Trainer(Character):
     else:
       print(f"{self.name} has no healing potions left!")
 
+  def revive_pokémon(self, pokémon):
+    if pokémon in self.knocked_out_pokémons and self.revive_potions > 0:
+      pokémon.revive()
+      self.knocked_out_pokémons.remove(pokémon)
+      self.pokémons.append(pokémon)
+    elif pokémon not in self.knocked_out_pokémons:
+      print(f"{pokémon.name} isn't knocked out!")
+    else:
+      print(f"{self.name} has no revive potions left!")
+
   def attack(self, other_trainer):
     attack_power = random.randint(1, 4)
     print(f"{self.name} attacked {other_trainer.name}, dealt {attack_power} damage.")
@@ -44,7 +54,7 @@ class Trainer(Character):
   def active_pokémon_knocked_out(self, other_trainer):
     self.knocked_out_pokémons.append(self.active_pokémon)
     self.pokémons.remove(self.active_pokémon)
-    if len(pokémons) > 0:
+    if len(self.pokémons) > 0:
       self.switch_pokémon(random.choice(self.pokémons))
     else:
       print(f"{self.name} has no more pokémons left!")
