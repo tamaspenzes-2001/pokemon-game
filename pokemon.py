@@ -11,6 +11,9 @@ class Pokémon(Character):
     Character.__init__(self, name, 4)
     self.type = pokémon_type
 
+  def __str__(self):
+    return f"{self.name} ({self.type})"
+
   def revive(self):
     self.knocked_out = False
     self.health = self.max_health

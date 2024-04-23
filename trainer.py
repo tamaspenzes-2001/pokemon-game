@@ -12,6 +12,13 @@ class Trainer(Character):
     self.active_pokémon = random.choice(pokémons)
     self.knocked_out_pokémons = []
 
+  def __str__(self):
+    string = f"{self.name}:"
+    for pokémon in self.pokémons:
+      string += "\n\t"
+      string += str(pokémon)
+    return string
+
   def heal_pokémon(self):
     if self.healing_potions > 0:
       print(f"{self.name} healed {self.active_pokémon.name}, has {self.healing_potions-1} potions left.")

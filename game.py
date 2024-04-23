@@ -13,6 +13,9 @@ tauros = Pokémon("Tauros", "fairy")
 
 bruno = Trainer("Bruno", [mankey, mewtwo, tauros])
 
+print(kabu)
+print(bruno)
+
 for i in range(6):
   kabu.attack(bruno)
   bruno.attack(kabu)
