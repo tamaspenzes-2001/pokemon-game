@@ -13,11 +13,11 @@ class Trainer(Character):
     self.knocked_out_pokémons = []
 
   def __str__(self):
-    string = f"{self.name}:"
+    string = f"\033[96m{self.name}\033[0;0m: "
     for pokémon in self.pokémons:
-      string += "\n\t"
       string += str(pokémon)
-    return string
+      string += ", "
+    return string[:-2]
 
   def heal_pokémon(self):
     if self.healing_potions > 0:
