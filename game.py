@@ -37,9 +37,9 @@ trainers = [kabu, bruno, glacia, drake]
 #   print("")
 
 def choose_characters(number_of_players):
-  print("\033[32m" + "Available trainers and their pokémons:" + "\033[0;0m")
   chosen_trainers = []
   for i in range(number_of_players):
+    print("\033[32m" + "Available trainers and their pokémons:" + "\033[0;0m")
     for j in range(len(trainers)):
       print(str(j+1) + ". " + str(trainers[j]))
     while True:
