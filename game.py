@@ -43,15 +43,10 @@ def choose_characters(number_of_players):
     for j in range(len(trainers)):
       print(str(j+1) + ". " + str(trainers[j]))
     while True:
-      try:
-        user_choice = int(input(f"\033[7;49;9{i+2}mPlayer {i+1}\033[0;0m Choose a trainer (1-4):\n> "))
-        if 0 < user_choice <= len(trainers):
-          chosen_trainers.append(trainers.pop(int(user_choice)-1))
-          break
-        else:
-          print("\033[91m" + "Invalid number!" + "\033[0m")
-      except ValueError:
-        print("\033[91m" + "Please provide a number!" + "\033[0m")
+      user_choice = input(f"\033[7;49;9{i+2}mPlayer {i+1}\033[0;0m Choose a trainer (1-4):\n> ")
+      if is_answer_valid(user_choice, len(trainers)):
+        chosen_trainers.append(trainers.pop(int(user_choice)-1))
+        break
   return chosen_trainers
 
 def choose_new_active_pokémon(trainer):
@@ -59,15 +54,22 @@ def choose_new_active_pokémon(trainer):
   for i in range(len(trainer.pokémons)):
     print(str(i+1) + ". " + str(trainer.pokémons[i]))
   while True:
-    try:
-      new_active_pokémon = int(input(f"> "))
-      if 0 < new_active_pokémon <= len(trainer.pokémons):
-        trainer.switch_pokémon(trainer.pokémons[new_active_pokémon-1])
-        break
-      else:
-        print("\033[91m" + "Invalid number!" + "\033[0m")
-    except ValueError:
-      print("\033[91m" + "Please provide a number!" + "\033[0m")
+    new_active_pokémon = int(input(f"> "))
+    if is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
+      trainer.switch_pokémon(trainer.pokémons[new_active_pokémon-1])
+      break
+
+def is_answer_valid(answer, number_of_options):
+  try:
+    answer_in_int = int(answer)
+    if 0 < answer_in_int <= number_of_options:
+      return True
+    else:
+      print("\033[91m" + "Invalid number!" + "\033[0m")
+      return False
+  except ValueError:
+    print("\033[91m" + "Please provide a number!" + "\033[0m")
+    return False
 
 def main():
   print("Welcome gamers!\n")
@@ -82,5 +84,10 @@ def main():
       trainer.print_health()
       trainer.active_pokémon.print_health()
       trainer.print_potions()
+      # while True:
+      #   print("\n1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
+      #   chosen_option = input("> ")
+      #   match chosen_option:
+      #     case 1
 
 main()
