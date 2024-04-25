@@ -40,8 +40,7 @@ def choose_characters(number_of_players):
   chosen_trainers = []
   for i in range(number_of_players):
     print("\033[32m" + "Available trainers and their pokémons:" + "\033[0;0m")
-    for j in range(len(trainers)):
-      print(str(j+1) + ". " + str(trainers[j]))
+    print_list(trainers)
     while True:
       user_choice = input(f"\033[7;49;9{i+2}mPlayer {i+1}\033[0;0m Choose a trainer (1-4):\n> ")
       if is_answer_valid(user_choice, len(trainers)):
@@ -51,12 +50,50 @@ def choose_characters(number_of_players):
 
 def choose_new_active_pokémon(trainer):
   print("\033[32m" + "Your active pokémon is knocked out. Choose another one!" + "\033[0;0m")
-  for i in range(len(trainer.pokémons)):
-    print(str(i+1) + ". " + str(trainer.pokémons[i]))
+  print_list(trainer.pokémons)
   while True:
-    new_active_pokémon = int(input(f"> "))
+    new_active_pokémon = input(f"> ")
     if is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
-      trainer.switch_pokémon(trainer.pokémons[new_active_pokémon-1])
+      trainer.switch_pokémon(trainer.pokémons[int(new_active_pokémon)-1])
+      break
+
+def print_stats(trainer):
+  trainer.print_health()
+  trainer.active_pokémon.print_health()
+  trainer.print_potions()
+
+def choose_action(trainer):
+  while True:
+    print("\n1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
+    chosen_option = input("> ")
+    if is_answer_valid(chosen_option, 3):
+      match chosen_option:
+        case "1": trainer.heal_pokémon()
+        case "2": choose_pokémon_to_revive(trainer)
+        case "3":
+          choose_trainer_to_attack(trainer)
+          break
+        
+def choose_pokémon_to_revive(trainer):
+  if len(trainer.knocked_out_pokémons) == 0:
+    print("You don't have any knocked out pokémons.")
+    return
+  print("Choose a knocked out pokémon to revive:")
+  print_list(trainer.knocked_out_pokémons)
+  while True:
+    pokémon_to_revive = input(f"> ")
+    if is_answer_valid(pokémon_to_revive, len(trainer.knocked_out_pokémons)):
+      trainer.revive_pokémon(trainer.knocked_out_pokémons[int(pokémon_to_revive)-1])
+      break
+
+def choose_trainer_to_attack(attacker):
+  other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name]
+  print("Choose a trainer to attack:")
+  print_list(other_trainers)
+  while True:
+    trainer_to_attack = input(f"> ")
+    if is_answer_valid(trainer_to_attack, len(other_trainers)):
+      attacker.attack(other_trainers[int(trainer_to_attack)-1])
       break
 
 def is_answer_valid(answer, number_of_options):
@@ -71,7 +108,12 @@ def is_answer_valid(answer, number_of_options):
     print("\033[91m" + "Please provide a number!" + "\033[0m")
     return False
 
+def print_list(list):
+  for i in range(len(list)):
+    print(str(i+1) + ". " + str(list[i]))
+
 def main():
+  global trainers
   print("Welcome gamers!\n")
   trainers = choose_characters(2)
   while True:
@@ -81,13 +123,7 @@ def main():
       if trainer.active_pokémon.knocked_out:
         choose_new_active_pokémon(trainer)
         print("")
-      trainer.print_health()
-      trainer.active_pokémon.print_health()
-      trainer.print_potions()
-      # while True:
-      #   print("\n1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
-      #   chosen_option = input("> ")
-      #   match chosen_option:
-      #     case 1
+      print_stats(trainer)
+      choose_action(trainer)
 
 main()
