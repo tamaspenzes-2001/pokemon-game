@@ -45,7 +45,7 @@ def choose_characters(number_of_players):
     while True:
       try:
         user_choice = int(input(f"\033[7;49;9{i+2}mPlayer {i+1}\033[0;0m Choose a trainer (1-4):\n> "))
-        if 0 < int(user_choice) <= len(trainers):
+        if 0 < user_choice <= len(trainers):
           chosen_trainers.append(trainers.pop(int(user_choice)-1))
           break
         else:
@@ -54,8 +54,28 @@ def choose_characters(number_of_players):
         print("\033[91m" + "Please provide a number!" + "\033[0m")
   return chosen_trainers
 
+def choose_new_active_pokémon(trainer):
+  print("\033[32m" + "Your active pokémon is knocked out. Choose another one!" + "\033[0;0m")
+  for i in range(len(trainer.pokémons)):
+    print(str(i+1) + ". " + str(trainer.pokémons[i]))
+  while True:
+    try:
+      new_active_pokémon = int(input(f"> "))
+      if 0 < new_active_pokémon <= len(trainer.pokémons):
+        trainer.switch_pokémon(trainer.pokémons[new_active_pokémon-1])
+        break
+      else:
+        print("\033[91m" + "Invalid number!" + "\033[0m")
+    except ValueError:
+      print("\033[91m" + "Please provide a number!" + "\033[0m")
+
 def main():
   print("Welcome gamers!\n")
   trainers = choose_characters(2)
+  while True:
+    for i in range(len(trainers)):
+      print(f"\033[7;49;9{i+2}m{trainers[i].name}\033[0;0m")
+      if trainers[i].active_pokémon.knocked_out:
+        choose_new_active_pokémon(trainers[i])
 
 main()
