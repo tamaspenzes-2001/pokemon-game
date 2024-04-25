@@ -71,3 +71,6 @@ class Trainer(Character):
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon
     print(f"{pokémon.name} is now the active pokémon of {self.name}.")
+
+  def print_potions(self):
+    print(f"{self.name} has {self.healing_potions} healing and {self.revive_potions} revive potions.")

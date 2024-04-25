@@ -24,3 +24,6 @@ class Character:
     else:
       self.health += number
       print(f"{self.name} gained {number} health, now has {self.health} health.")
+
+  def print_health(self):
+    print(f"{self.name} has {self.health} health.")

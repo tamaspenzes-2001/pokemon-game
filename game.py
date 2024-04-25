@@ -74,8 +74,13 @@ def main():
   trainers = choose_characters(2)
   while True:
     for i in range(len(trainers)):
-      print(f"\033[7;49;9{i+2}m{trainers[i].name}\033[0;0m")
-      if trainers[i].active_pokémon.knocked_out:
-        choose_new_active_pokémon(trainers[i])
+      trainer = trainers[i]
+      print(f"\033[7;49;9{i+2}m{trainer.name}\033[0;0m")
+      if trainer.active_pokémon.knocked_out:
+        choose_new_active_pokémon(trainer)
+        print("")
+      trainer.print_health()
+      trainer.active_pokémon.print_health()
+      trainer.print_potions()
 
 main()
