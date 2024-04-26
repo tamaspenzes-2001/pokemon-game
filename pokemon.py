@@ -26,7 +26,7 @@ class Pokémon(Character):
         attack_multiplier = multiplier
         break
     attack_power = (self.level + 1) * attack_multiplier
-    print(f"{self.name} attacked {other_pokémon.name}, dealt {attack_power} damage.")
+    print(f"\033[96m{self.name}\033[0m attacked \033[95m{other_pokémon.name}\033[0m, dealt \033[91m{attack_power:g}\033[0m damage.")
     if attack_power > 0:
       self.gain_xp(attack_power)
     other_pokémon.lose_health(attack_power)
@@ -34,8 +34,11 @@ class Pokémon(Character):
   def gain_xp(self, damage_dealt):
     xp_earned = damage_dealt - (self.level / 2)
     self.xp += xp_earned
-    print(f"{self.name} gained {xp_earned} xp, now has {self.xp} xp.")
+    print(f"\033[96m{self.name}\033[0m gained {xp_earned:g} xp, now has {self.xp:g} xp.")
     if self.xp >= self.level * 10:
       self.level += 1
       self.max_health += 1
-      print(f"{self.name} leveled up, now is level {self.level} with {self.max_health} max health!")
+      print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level} with {self.max_health} max health!")
+
+  def print_stats(self):
+    print(f"{self}: \033[96m{self.health:g}/{self.max_health}\033[0m health, \033[96m{self.xp:g}\033[0m xp, level \033[96m{self.level}\033[0m")

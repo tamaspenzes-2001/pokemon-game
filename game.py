@@ -1,5 +1,6 @@
 from pokemon import Pokémon
 from trainer import Trainer
+import time
 
 charmander = Pokémon("Charmander", "fire")
 ninetales = Pokémon("Ninetales", "electric")
@@ -58,27 +59,32 @@ def choose_new_active_pokémon(trainer):
       break
 
 def print_stats(trainer):
-  trainer.print_health()
-  trainer.active_pokémon.print_health()
+  trainer.print_stats()
+  trainer.active_pokémon.print_stats()
   trainer.print_potions()
 
 def choose_action(trainer):
   while True:
-    print("\n1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
+    print("\n\033[32m" + "What to do?" + "\033[0m")
+    print("1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
     chosen_option = input("> ")
     if is_answer_valid(chosen_option, 3):
       match chosen_option:
         case "1": trainer.heal_pokémon()
-        case "2": choose_pokémon_to_revive(trainer)
+        case "2":
+          if trainer.revive_potions > 0:
+            choose_pokémon_to_revive(trainer)
+          else:
+            print(f"{trainer.name} has no revive potions left!")
         case "3":
           choose_trainer_to_attack(trainer)
           break
         
 def choose_pokémon_to_revive(trainer):
   if len(trainer.knocked_out_pokémons) == 0:
-    print("You don't have any knocked out pokémons.")
+    print(trainer.name + " doesn't have any knocked out pokémons.")
     return
-  print("Choose a knocked out pokémon to revive:")
+  print("\033[32m" + "Choose a knocked out pokémon to revive:" + "\033[0m")
   print_list(trainer.knocked_out_pokémons)
   while True:
     pokémon_to_revive = input(f"> ")
@@ -88,7 +94,7 @@ def choose_pokémon_to_revive(trainer):
 
 def choose_trainer_to_attack(attacker):
   other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name]
-  print("Choose a trainer to attack:")
+  print("\033[32m" + "Choose a trainer to attack:" + "\033[0m")
   print_list(other_trainers)
   while True:
     trainer_to_attack = input(f"> ")
@@ -119,11 +125,12 @@ def main():
   while True:
     for i in range(len(trainers)):
       trainer = trainers[i]
-      print(f"\033[7;49;9{i+2}m{trainer.name}\033[0;0m")
+      print(f"\n\033[7;49;9{i+2}m{trainer.name}\033[0;0m")
       if trainer.active_pokémon.knocked_out:
         choose_new_active_pokémon(trainer)
         print("")
       print_stats(trainer)
       choose_action(trainer)
+      time.sleep(2)
 
 main()

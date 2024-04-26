@@ -9,21 +9,18 @@ class Character:
 
   def knock_out(self):
     self.knocked_out = True
-    print(f"{self.name} is knocked out!")
+    print(f"\033[95m{self.name}\033[0m is knocked out!")
 
   def lose_health(self, number):
     self.health -= number
-    print(f"{self.name} lost {number} health, now has {self.health} health.")
+    print(f"\033[95m{self.name}\033[0m lost \033[91m{number:g}\033[0m health, now has {self.health:g} health.")
     if self.health <= 0:
       self.knock_out()
 
   def regain_health(self, number):
     if self.health + number >= self.max_health:
-      print(f"{self.name} gained {int(self.max_health - self.health)} health, is now on full health ({self.max_health})")
+      print(f"{self.name} gained {(self.max_health - self.health):g} health, is now on full health ({self.max_health})")
       self.health = self.max_health
     else:
       self.health += number
-      print(f"{self.name} gained {number} health, now has {self.health} health.")
-
-  def print_health(self):
-    print(f"{self.name} has {self.health} health.")
+      print(f"{self.name} gained {number:g} health, now has {self.health:g} health.")
