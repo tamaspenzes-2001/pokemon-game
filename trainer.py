@@ -42,6 +42,8 @@ class Trainer(Character):
     print(f"{self.name} attacked {other_trainer.name}, dealt {attack_power} damage.")
     self.gain_xp(attack_power)
     other_trainer.lose_health(attack_power)
+    if other_trainer.knocked_out:
+      sys.exit(f"{self.name} won the game!")
     self.active_pokémon.attack(other_trainer.active_pokémon)
     if other_trainer.active_pokémon.knocked_out:
       other_trainer.active_pokémon_knocked_out(self)
