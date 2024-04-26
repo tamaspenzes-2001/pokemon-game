@@ -49,7 +49,7 @@ class Trainer(Character):
     xp_earned = damage_dealt - (self.level / 2)
     self.xp += xp_earned
     print(f"\033[96m{self.name}\033[0m gained {xp_earned:g} xp, now has {self.xp:g} xp.")
-    if self.xp >= self.level * 15:
+    if self.xp >= self.level * 10:
       self.level += 1
       self.max_health += 1
       print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level} with {self.max_health} max health!")
@@ -63,7 +63,7 @@ class Trainer(Character):
     if len(self.pokémons) == 0:
       print(f"\033[95m{self.name}\033[0m has no more pokémons left!")
       self.knock_out()
-      sys.exit(f"\033[96m{other_trainer}\033[0m won the game!")
+      sys.exit(f"\033[96m{other_trainer.name}\033[0m won the game!")
 
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon
