@@ -1,5 +1,6 @@
 from pokemon import Pokémon
 from trainer import Trainer
+import utils
 import time
 
 charmander = Pokémon("Charmander", "fire")
@@ -58,29 +59,30 @@ trainers = [kabu, bruno, glacia, drake, mina, koga, wattson]
 def provide_number_of_players():
   while True:
     number_of_players = input(f"\nNumber of players (2-7)\n> ")
-    if is_answer_valid(number_of_players, 7, 2):
+    if utils.is_answer_valid(number_of_players, 7, 2):
       return int(number_of_players)
 
 def choose_trainers(number_of_players):
   chosen_trainers = []
   for i in range(number_of_players):
-    print(f"\n\033[7;49;9{i+1}mPlayer {i+1}\033[0;0m")
+    print(f"\033[7;49;9{i+1}mPlayer {i+1}\033[0;0m")
     print("\033[32m" + "Choose a trainer:" + "\033[0;0m")
-    print_list(trainers)
+    utils.print_list(trainers)
     while True:
       user_choice = input(f"> ")
-      if is_answer_valid(user_choice, len(trainers)):
+      if utils.is_answer_valid(user_choice, len(trainers)):
         chosen_trainers.append(trainers.pop(int(user_choice)-1))
         choose_active_pokémon(chosen_trainers[i])
+        utils.clear_screen()
         break
   return chosen_trainers
 
 def choose_active_pokémon(trainer):
   print("\033[32m" + "Choose a pokémon:" + "\033[0;0m")
-  print_list(trainer.pokémons)
+  utils.print_list(trainer.pokémons)
   while True:
     new_active_pokémon = input(f"> ")
-    if is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
+    if utils.is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
       trainer.switch_pokémon(trainer.pokémons[int(new_active_pokémon)-1])
       break
 
@@ -94,7 +96,7 @@ def choose_action(trainer):
     print("\n\033[32m" + "What to do?" + "\033[0m")
     print("1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
     chosen_option = input("> ")
-    if is_answer_valid(chosen_option, 3):
+    if utils.is_answer_valid(chosen_option, 3):
       match chosen_option:
         case "1": trainer.heal_pokémon()
         case "2":
@@ -111,50 +113,36 @@ def choose_pokémon_to_revive(trainer):
     print(trainer.name + " doesn't have any knocked out pokémons.")
     return
   print("\033[32m" + "Choose a knocked out pokémon to revive:" + "\033[0m")
-  print_list(trainer.knocked_out_pokémons)
+  utils.print_list(trainer.knocked_out_pokémons)
   while True:
     pokémon_to_revive = input(f"> ")
-    if is_answer_valid(pokémon_to_revive, len(trainer.knocked_out_pokémons)):
+    if utils.is_answer_valid(pokémon_to_revive, len(trainer.knocked_out_pokémons)):
       trainer.revive_pokémon(trainer.knocked_out_pokémons[int(pokémon_to_revive)-1])
       break
 
 def choose_trainer_to_attack(attacker):
   other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name]
   print("\033[32m" + "Choose a trainer to attack:" + "\033[0m")
-  print_list(other_trainers)
+  utils.print_list(other_trainers)
   while True:
     trainer_to_attack = input(f"> ")
-    if is_answer_valid(trainer_to_attack, len(other_trainers)):
+    if utils.is_answer_valid(trainer_to_attack, len(other_trainers)):
+      utils.clear_screen()
       attacker.attack(other_trainers[int(trainer_to_attack)-1])
       break
-
-def is_answer_valid(answer, max_number, min_number=1):
-  try:
-    answer_in_int = int(answer)
-    if min_number <= answer_in_int <= max_number:
-      return True
-    else:
-      print("\033[91m" + "Invalid number!" + "\033[0m")
-      return False
-  except ValueError:
-    print("\033[91m" + "Please provide a number!" + "\033[0m")
-    return False
-
-def print_list(list):
-  for i in range(len(list)):
-    print(str(i+1) + ". " + str(list[i]))
 
 def main():
   global trainers
   print("Welcome gamers!")
   number_of_players = provide_number_of_players()
+  utils.clear_screen()
   trainers = choose_trainers(number_of_players)
   while True:
     for i in range(len(trainers)):
       trainer = trainers[i]
       print(f"\n\033[7;49;9{i+1}m{trainer.name}'s turn\033[0;0m")
       if trainer.active_pokémon.knocked_out:
-        print(f"{trainer}'s active pokémon is knocked out.")
+        print(f"{trainer.name}'s active pokémon is knocked out.")
         choose_active_pokémon(trainer)
         print("")
       print_stats(trainer)
