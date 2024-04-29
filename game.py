@@ -26,7 +26,25 @@ gabite = Pokémon("Gabite", "grass")
 
 drake = Trainer("Drake", [latias, dragonite, gabite])
 
-trainers = [kabu, bruno, glacia, drake]
+tinkatuff = Pokémon("Tinkatuff", "dark")
+kirlia = Pokémon("Kirlia", "normal")
+altaria = Pokémon("Altaria", "poison")
+
+mina = Trainer("Mina", [tinkatuff, kirlia, altaria])
+
+bulbasaur = Pokémon("Bulbasaur", "ground")
+ivysaur = Pokémon("Ivysaur", "flying")
+weezing = Pokémon("Weezing", "rock")
+
+koga = Trainer("Koga", [bulbasaur, ivysaur, weezing])
+
+diglett = Pokémon("Diglett", "ice")
+sandslash = Pokémon("Sandslash", "steel")
+pikachu = Pokémon("Pikachu", "electric")
+
+wattson = Trainer("Wattson", [diglett, sandslash, pikachu])
+
+trainers = [kabu, bruno, glacia, drake, mina, koga, wattson]
 
 # for i in range(6):
 #   kabu.attack(bruno)
@@ -37,20 +55,28 @@ trainers = [kabu, bruno, glacia, drake]
 #   bruno.heal_pokémon()
 #   print("")
 
-def choose_characters(number_of_players):
+def provide_number_of_players():
+  while True:
+    number_of_players = input(f"\nNumber of players (2-7)\n> ")
+    if is_answer_valid(number_of_players, 7, 2):
+      return int(number_of_players)
+
+def choose_trainers(number_of_players):
   chosen_trainers = []
   for i in range(number_of_players):
-    print("\033[32m" + "Available trainers and their pokémons:" + "\033[0;0m")
+    print(f"\n\033[7;49;9{i+1}mPlayer {i+1}\033[0;0m")
+    print("\033[32m" + "Choose a trainer:" + "\033[0;0m")
     print_list(trainers)
     while True:
-      user_choice = input(f"\033[7;49;9{i+2}mPlayer {i+1}\033[0;0m Choose a trainer (1-4):\n> ")
+      user_choice = input(f"> ")
       if is_answer_valid(user_choice, len(trainers)):
         chosen_trainers.append(trainers.pop(int(user_choice)-1))
+        choose_active_pokémon(chosen_trainers[i])
         break
   return chosen_trainers
 
-def choose_new_active_pokémon(trainer):
-  print("\033[32m" + "Your active pokémon is knocked out. Choose another one!" + "\033[0;0m")
+def choose_active_pokémon(trainer):
+  print("\033[32m" + "Choose a pokémon:" + "\033[0;0m")
   print_list(trainer.pokémons)
   while True:
     new_active_pokémon = input(f"> ")
@@ -102,10 +128,10 @@ def choose_trainer_to_attack(attacker):
       attacker.attack(other_trainers[int(trainer_to_attack)-1])
       break
 
-def is_answer_valid(answer, number_of_options):
+def is_answer_valid(answer, max_number, min_number=1):
   try:
     answer_in_int = int(answer)
-    if 0 < answer_in_int <= number_of_options:
+    if min_number <= answer_in_int <= max_number:
       return True
     else:
       print("\033[91m" + "Invalid number!" + "\033[0m")
@@ -120,14 +146,16 @@ def print_list(list):
 
 def main():
   global trainers
-  print("Welcome gamers!\n")
-  trainers = choose_characters(2)
+  print("Welcome gamers!")
+  number_of_players = provide_number_of_players()
+  trainers = choose_trainers(number_of_players)
   while True:
     for i in range(len(trainers)):
       trainer = trainers[i]
-      print(f"\n\033[7;49;9{i+2}m{trainer.name}\033[0;0m")
+      print(f"\n\033[7;49;9{i+1}m{trainer.name}'s turn\033[0;0m")
       if trainer.active_pokémon.knocked_out:
-        choose_new_active_pokémon(trainer)
+        print(f"{trainer}'s active pokémon is knocked out.")
+        choose_active_pokémon(trainer)
         print("")
       print_stats(trainer)
       choose_action(trainer)
