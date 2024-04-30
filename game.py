@@ -47,15 +47,6 @@ wattson = Trainer("Wattson", [diglett, sandslash, pikachu])
 
 trainers = [kabu, bruno, glacia, drake, mina, koga, wattson]
 
-# for i in range(6):
-#   kabu.attack(bruno)
-#   bruno.attack(kabu)
-#   print("")
-#   kabu.revive_pokémon(charmander)
-#   kabu.heal_pokémon()
-#   bruno.heal_pokémon()
-#   print("")
-
 def provide_number_of_players():
   while True:
     number_of_players = input(f"\nNumber of players (2-7)\n> ")
@@ -68,9 +59,12 @@ def choose_trainers(number_of_players):
     print(f"\033[7;49;9{i+1}mPlayer {i+1}\033[0;0m")
     print("\033[32m" + "Choose a trainer:" + "\033[0;0m")
     utils.print_list(trainers)
+    print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
     while True:
       user_choice = input(f"> ")
-      if utils.is_answer_valid(user_choice, len(trainers)):
+      if "-" in user_choice:
+        get_attack_power(user_choice)
+      elif utils.is_answer_valid(user_choice, len(trainers)):
         chosen_trainers.append(trainers.pop(int(user_choice)-1))
         choose_active_pokémon(chosen_trainers[i])
         utils.clear_screen()
@@ -80,9 +74,12 @@ def choose_trainers(number_of_players):
 def choose_active_pokémon(trainer):
   print("\033[32m" + "Choose a pokémon:" + "\033[0;0m")
   utils.print_list(trainer.pokémons)
+  print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
   while True:
     new_active_pokémon = input(f"> ")
-    if utils.is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
+    if "-" in new_active_pokémon:
+      get_attack_power(new_active_pokémon)
+    elif utils.is_answer_valid(new_active_pokémon, len(trainer.pokémons)):
       trainer.switch_pokémon(trainer.pokémons[int(new_active_pokémon)-1])
       break
 
@@ -95,8 +92,11 @@ def choose_action(trainer):
   while True:
     print("\n\033[32m" + "What to do?" + "\033[0m")
     print("1. Heal active pokémon\n2. Revive a pokémon\n3. Attack")
+    print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
     chosen_option = input("> ")
-    if utils.is_answer_valid(chosen_option, 3):
+    if "-" in chosen_option:
+      get_attack_power(chosen_option)
+    elif utils.is_answer_valid(chosen_option, 3):
       match chosen_option:
         case "1": trainer.heal_pokémon()
         case "2":
@@ -130,6 +130,18 @@ def choose_trainer_to_attack(attacker):
       utils.clear_screen()
       attacker.attack(other_trainers[int(trainer_to_attack)-1])
       break
+
+def get_attack_power(types):
+  types_list = types.split("-")
+  if len(types_list) == 2 and types_list[0] in Pokémon.pokémon_types and types_list[1] in Pokémon.pokémon_types:
+    attack_multiplier = 1
+    for multiplier in Pokémon.multipliers:
+      if types in Pokémon.multipliers[multiplier]:
+        attack_multiplier = multiplier
+        break
+    print(f"{types_list[0].title()} can deal \033[91m(level + 1) * {attack_multiplier}\033[0m damage to {types_list[1]}.")
+  else:
+    print("\033[91m" + "Invalid format or types!" + "\033[0m")
 
 def main():
   global trainers

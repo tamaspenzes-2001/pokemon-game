@@ -1,6 +1,7 @@
 from character import Character
 
 class Pokémon(Character):
+  pokémon_types = ["normal", "fire", "water", "electric", "grass", "ice", "fighting", "poison", "ground", "flying", "psychic", "bug", "rock", "ghost", "dragon", "dark", "steel", "fairy"]
   multipliers = {
     0: ["normal-ghost", "electric-ground", "fighting-ghost", "poison-steel", "ground-flying", "psychic-dark", "ghost-normal", "dragon-fairy"],
     0.5: ["normal-rock", "normal-steel", "fire-fire", "fire-water", "fire-rock", "fire-dragon", "water-water", "water-grass", "water-dragon", "electric-electric", "electric-grass", "electric-dragon", "grass-fire", "grass-grass", "grass-poison", "grass-fly", "grass-bug", "grass-dragon", "grass-steel", "ice-fire", "ice-water", "ice-ice", "ice-steel", "fighting-poison", "fighting-flying", "fighting-psychic", "fighting-bug", "fighting-fairy", "poison-ground", "poison-rock", "poison-ghost", "ground-grass", "ground-bug", "flying-electric", "flying-rock", "flying-steel", "psychic-psychic", "psychic-steel", "bug-fire", "bug-fighting", "bug-poison", "bug-flying", "bug-ghost", "bug-steel", "bug-fairy", "rock-fighting", "rock-ground", "rock-steel", "ghost-dark", "dragon-steel", "dark-fighting", "dark-dark", "dark-fairy", "steel-fire", "steel-water", "steel-electric", "steel-steel", "fairy-fire", "fairy-poison", "fairy-steel"],
