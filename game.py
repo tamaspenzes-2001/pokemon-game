@@ -122,7 +122,7 @@ def choose_pokémon_to_revive(trainer):
       break
 
 def choose_trainer_to_attack(attacker):
-  other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name]
+  other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name and not trainer.active_pokémon.knocked_out]
   print("\033[32m" + "Choose a trainer to attack:" + "\033[0m")
   utils.print_list(other_trainers)
   while True:
