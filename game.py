@@ -85,6 +85,7 @@ def choose_active_pokémon(trainer):
 
 def print_stats(trainer):
   trainer.print_stats()
+  trainer.print_pokémons()
   trainer.active_pokémon.print_stats()
   trainer.print_potions()
 

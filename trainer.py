@@ -75,3 +75,10 @@ class Trainer(Character):
 
   def print_potions(self):
     print(f"{self.name} has \033[92m{self.healing_potions}\033[0m healing and \033[92m{self.revive_potions}\033[0m revive potions.")
+
+  def print_pokémons(self):
+    string = "Pokémons: "
+    for pokémon in self.pokémons:
+      string += str(pokémon)
+      string += ", "
+    print(string[:-2])
