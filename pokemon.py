@@ -27,7 +27,7 @@ class Pokémon(Character):
         attack_multiplier = multiplier
         break
     attack_power = (self.level + 1) * attack_multiplier
-    print(f"\033[96m{self.name}\033[0m attacked \033[95m{other_pokémon.name}\033[0m, dealt \033[91m{attack_power:g}\033[0m damage.")
+    print(f"\033[96m{self}\033[0m attacked \033[95m{other_pokémon}\033[0m, dealt \033[91m{attack_power:g}\033[0m damage.")
     if attack_power > 0:
       self.gain_xp(attack_power)
     other_pokémon.lose_health(attack_power)
