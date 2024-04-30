@@ -15,11 +15,11 @@ tauros = Pokémon("Tauros", "fairy")
 
 bruno = Trainer("Bruno", [mankey, mewtwo, tauros])
 
-vulpix = Pokémon("Ninetales", "ice")
+vulpix = Pokémon("Vulpix", "ice")
 jynx = Pokémon("Jynx", "psychic")
 dewgong = Pokémon("Dewgong", "ghost")
 
-glacia = Trainer("Glacia", [vulpix, jynx, dewgong])
+glacia = Trainer("Glacia", [vulpix])
 
 latias = Pokémon("Latias", "steel")
 dragonite = Pokémon("Dragonite", "dragon")
@@ -122,25 +122,25 @@ def choose_pokémon_to_revive(trainer):
       break
 
 def choose_trainer_to_attack(attacker):
-  other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name and not trainer.active_pokémon.knocked_out]
+  other_trainers = [trainer for trainer in trainers if trainer.name != attacker.name and not trainer.active_pokémon.knocked_out and not trainer.knocked_out]
   print("\033[32m" + "Choose a trainer to attack:" + "\033[0m")
   utils.print_list(other_trainers)
   while True:
-    trainer_to_attack = input(f"> ")
-    if utils.is_answer_valid(trainer_to_attack, len(other_trainers)):
+    trainer_number = input(f"> ")
+    if utils.is_answer_valid(trainer_number, len(other_trainers)):
       utils.clear_screen()
-      attacker.attack(other_trainers[int(trainer_to_attack)-1])
+      attacker.attack(other_trainers[int(trainer_number)-1])
       print("")
       break
 
 def choose_trainer_to_view_stats(current_trainer):
-  other_trainers = [trainer for trainer in trainers if trainer.name != current_trainer.name]
+  other_trainers = [trainer for trainer in trainers if trainer.name != current_trainer.name and not trainer.knocked_out]
   print("\033[32m" + "Choose a trainer:" + "\033[0m")
   utils.print_list(other_trainers)
   while True:
-    trainer_to_attack = input(f"> ")
-    if utils.is_answer_valid(trainer_to_attack, len(other_trainers)):
-      print_stats(other_trainers[int(trainer_to_attack)-1])
+    trainer_number = input(f"> ")
+    if utils.is_answer_valid(trainer_number, len(other_trainers)):
+      print_stats(other_trainers[int(trainer_number)-1])
       break
 
 def get_attack_power(types):
@@ -164,6 +164,8 @@ def main():
   while True:
     for i in range(len(trainers)):
       trainer = trainers[i]
+      if trainer.knocked_out:
+        continue
       print(f"\033[7;49;9{i+1}m{trainer.name}'s turn\033[0;0m")
       if trainer.active_pokémon.knocked_out:
         print(f"{trainer.name}'s active pokémon is knocked out.")
