@@ -1,6 +1,7 @@
 from pokemon import Pokémon
 from trainer import Trainer
 import utils
+import sys
 import time
 
 charmander = Pokémon("Charmander", "fire")
@@ -158,6 +159,16 @@ def get_attack_power(types):
   else:
     print("\033[91m" + "Invalid format or types!" + "\033[0m")
 
+def check_game_state(number_of_players):
+  counter = 0
+  for trainer in trainers:
+    if trainer.knocked_out:
+      counter += 1
+    else:
+      not_knocked_out = trainer
+  if counter+1 == number_of_players:
+    sys.exit(f"{not_knocked_out.name} won the game!")
+
 def main():
   global trainers
   print("Welcome gamers!")
@@ -166,6 +177,7 @@ def main():
   trainers = choose_trainers(number_of_players)
   while True:
     for i in range(len(trainers)):
+      check_game_state(number_of_players)
       trainer = trainers[i]
       if trainer.knocked_out:
         continue

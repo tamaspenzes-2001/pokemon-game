@@ -1,5 +1,4 @@
 import random
-import sys
 import time
 import utils
 from character import Character
@@ -41,8 +40,6 @@ class Trainer(Character):
     print(f"\n\033[96m{self.name}\033[0m attacked \033[95m{other_trainer.name}\033[0m, dealt \033[91m{attack_power}\033[0m damage.")
     self.gain_xp(attack_power)
     other_trainer.lose_health(attack_power)
-    if other_trainer.knocked_out:
-      other_trainer.knock_out()
     self.active_pokémon.attack(other_trainer.active_pokémon)
     if other_trainer.active_pokémon.knocked_out:
       other_trainer.active_pokémon_knocked_out(self)
