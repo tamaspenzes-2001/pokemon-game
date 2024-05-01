@@ -20,7 +20,7 @@ vulpix = Pokémon("Vulpix", "ice")
 jynx = Pokémon("Jynx", "psychic")
 dewgong = Pokémon("Dewgong", "ghost")
 
-glacia = Trainer("Glacia", [vulpix])
+glacia = Trainer("Glacia", [vulpix, jynx, dewgong])
 
 latias = Pokémon("Latias", "steel")
 dragonite = Pokémon("Dragonite", "dragon")
