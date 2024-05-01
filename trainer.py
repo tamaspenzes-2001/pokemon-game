@@ -51,13 +51,17 @@ class Trainer(Character):
     xp_earned = damage_dealt - (self.level / 2)
     self.xp += xp_earned
     print(f"\033[96m{self.name}\033[0m gained {xp_earned:g} xp, now has {self.xp:g} xp.")
-    if self.xp >= self.level * 10:
-      self.level += 1
-      self.max_health += 1
-      print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level} with {self.max_health} max health!")
-      self.healing_potions += 1
-      self.revive_potions += 1
-      print(f"\033[96m{self.name}\033[0m won a healing and a revive potion, has {self.healing_potions} healing and {self.revive_potions} revive potion(s).")
+    if self.xp >= self.level * 8:
+      self.level_up()
+
+  def level_up(self):
+    self.level += 1
+    self.health
+    self.max_health += 1
+    print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level}, gained 1 health and has {self.max_health} max health!")
+    self.healing_potions += 1
+    self.revive_potions += 1
+    print(f"\033[96m{self.name}\033[0m won a healing and a revive potion, has {self.healing_potions} healing and {self.revive_potions} revive potion(s).")
       
   def active_pokémon_knocked_out(self, other_trainer):
     self.knocked_out_pokémons.append(self.active_pokémon)

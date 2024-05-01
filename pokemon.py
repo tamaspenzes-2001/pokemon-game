@@ -9,7 +9,7 @@ class Pokémon(Character):
   }
 
   def __init__(self, name, pokémon_type):
-    Character.__init__(self, name, 4)
+    Character.__init__(self, name, 6)
     self.type = pokémon_type
 
   def __str__(self):
@@ -36,10 +36,14 @@ class Pokémon(Character):
     xp_earned = damage_dealt - (self.level / 2)
     self.xp += xp_earned
     print(f"\033[96m{self.name}\033[0m gained {xp_earned:g} xp, now has {self.xp:g} xp.")
-    if self.xp >= self.level * 10:
-      self.level += 1
-      self.max_health += 1
-      print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level} with {self.max_health} max health!")
+    if self.xp >= self.level * 6:
+      self.level_up()
+      
+  def level_up(self):
+    self.level += 1
+    self.health += 1
+    self.max_health += 1
+    print(f"\033[96m{self.name}\033[0m leveled up, now is level {self.level}, gained 1 health and has {self.max_health} max health!")
 
   def print_stats(self):
     print(f"{self}: \033[96m{self.health:g}/{self.max_health}\033[0m health, \033[96m{self.xp:g}\033[0m xp, level \033[96m{self.level}\033[0m")
