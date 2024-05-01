@@ -167,7 +167,7 @@ def check_game_state(number_of_players):
     else:
       not_knocked_out = trainer
   if counter+1 == number_of_players:
-    sys.exit(f"{not_knocked_out.name} won the game!")
+    sys.exit(f"\033[92m{not_knocked_out.name} won the game!\033[0m")
 
 def main():
   global trainers
