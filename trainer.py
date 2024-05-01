@@ -73,6 +73,7 @@ class Trainer(Character):
   def switch_pokémon(self, pokémon):
     self.active_pokémon = pokémon
     print(f"{pokémon.name} is now the active pokémon of {self.name}.")
+    self.active_pokémon.print_stats()
 
   def print_stats(self):
     print(f"{self.name}: \033[96m{self.health:g}/{self.max_health}\033[0m health, \033[96m{self.xp:g}\033[0m xp, level \033[96m{self.level}\033[0m")
