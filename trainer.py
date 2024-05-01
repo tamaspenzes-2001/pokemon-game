@@ -81,8 +81,16 @@ class Trainer(Character):
     print(f"{self.name} has \033[92m{self.healing_potions}\033[0m healing and \033[92m{self.revive_potions}\033[0m revive potions.")
 
   def print_pokémons(self):
-    string = "Pokémons: "
+    string = "Pokémon(s): "
     for pokémon in self.pokémons:
       string += str(pokémon)
       string += ", "
     print(string[:-2])
+
+  def print_knocked_out_pokémons(self):
+    if len(self.knocked_out_pokémons) > 0:
+      string = "Knocked out pokémon(s): "
+      for pokémon in self.knocked_out_pokémons:
+        string += str(pokémon)
+        string += ", "
+      print(string[:-2])
