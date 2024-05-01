@@ -36,7 +36,7 @@ class Trainer(Character):
     self.pokémons.append(pokémon)
 
   def attack(self, other_trainer):
-    attack_power = random.randint(1, 4)
+    attack_power = random.randint(1, 4) + self.level
     print(f"\n\033[96m{self.name}\033[0m attacked \033[95m{other_trainer.name}\033[0m, dealt \033[91m{attack_power}\033[0m damage.")
     self.gain_xp(attack_power)
     other_trainer.lose_health(attack_power)
