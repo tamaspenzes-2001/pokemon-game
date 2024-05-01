@@ -59,7 +59,7 @@ def choose_trainers(number_of_players):
     print(f"\033[7;49;9{i+1}mPlayer {i+1}\033[0;0m")
     print("\033[32m" + "Choose a trainer:" + "\033[0;0m")
     utils.print_list(trainers)
-    print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
+    print("[Get pokémon damage by type: attacker-target (e.g. fire-water)]")
     while True:
       user_choice = input(f"> ")
       if "-" in user_choice:
@@ -74,7 +74,7 @@ def choose_trainers(number_of_players):
 def choose_active_pokémon(trainer):
   print("\033[32m" + "Choose a pokémon:" + "\033[0;0m")
   utils.print_list(trainer.pokémons)
-  print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
+  print("[Get pokémon damage by type: attacker-target (e.g. fire-water)]")
   while True:
     new_active_pokémon = input(f"> ")
     if "-" in new_active_pokémon:
@@ -94,7 +94,7 @@ def choose_action(trainer):
   while True:
     print("\n\033[32m" + "What to do?" + "\033[0m")
     print("1. Heal active pokémon\n2. Revive a pokémon\n3. Change active pokémon\n4. Attack\n5. Get another player's stats")
-    print("[Get pokémon damage by providing types in the following format: attacker-target (e.g. fire-water)]")
+    print("[Get pokémon damage by type: attacker-target (e.g. fire-water)]")
     chosen_option = input("> ")
     if "-" in chosen_option:
       get_attack_power(chosen_option)
