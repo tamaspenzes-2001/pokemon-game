@@ -20,6 +20,14 @@ class Trainer(Character):
       string += ", "
     return string[:-2]
 
+  def heal_self(self):
+    if self.healing_potions > 0:
+      print(f"{self.name} healed themselves, has {self.healing_potions-1} healing potion(s) left.")
+      self.regain_health(random.randint(1, 4))
+      self.healing_potions -= 1
+    else:
+      print(f"{self.name} has no healing potions left!")
+
   def heal_pokémon(self):
     if self.healing_potions > 0:
       print(f"{self.name} healed {self.active_pokémon.name}, has {self.healing_potions-1} healing potion(s) left.")
@@ -29,11 +37,14 @@ class Trainer(Character):
       print(f"{self.name} has no healing potions left!")
 
   def revive_pokémon(self, pokémon):
-    pokémon.revive()
-    self.revive_potions -= 1
-    print(f"{self.name} revived {pokémon.name}, has {self.healing_potions} revive potion(s) left.")
-    self.knocked_out_pokémons.remove(pokémon)
-    self.pokémons.append(pokémon)
+    if self.revive_potions > 0:
+      pokémon.revive()
+      self.revive_potions -= 1
+      print(f"{self.name} revived {pokémon.name}, has {self.healing_potions} revive potion(s) left.")
+      self.knocked_out_pokémons.remove(pokémon)
+      self.pokémons.append(pokémon)
+    else:
+      print(f"{self.name} has no revive potions left!")
 
   def attack(self, other_trainer):
     attack_power = random.randint(1, 4) + self.level

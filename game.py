@@ -94,24 +94,21 @@ def print_stats(trainer):
 def choose_action(trainer):
   while True:
     print("\n\033[32m" + "What to do?" + "\033[0m")
-    print("1. Heal active pokémon\n2. Revive a pokémon\n3. Change active pokémon\n4. Attack\n5. Get another player's stats")
+    print("1. Heal yourself\n2. Heal active pokémon\n3. Revive a pokémon\n4. Change active pokémon\n5. Attack\n6. Get another player's stats")
     print("[Get pokémon damage by type: attacker-target (e.g. fire-water)]")
     chosen_option = input("> ")
     if "-" in chosen_option:
       get_attack_power(chosen_option)
     elif utils.is_answer_valid(chosen_option, 5):
       match chosen_option:
-        case "1": trainer.heal_pokémon()
-        case "2":
-          if trainer.revive_potions > 0:
-            choose_pokémon_to_revive(trainer)
-          else:
-            print(f"{trainer.name} has no revive potions left!")
-        case "3": choose_active_pokémon(trainer)
-        case "4":
+        case "1": trainer.heal_self()
+        case "2": trainer.heal_pokémon()
+        case "3": choose_pokémon_to_revive(trainer)
+        case "4": choose_active_pokémon(trainer)
+        case "5":
           choose_trainer_to_attack(trainer)
           break
-        case "5": choose_trainer_to_view_stats(trainer)
+        case "6": choose_trainer_to_view_stats(trainer)
         
 def choose_pokémon_to_revive(trainer):
   if len(trainer.knocked_out_pokémons) == 0:
